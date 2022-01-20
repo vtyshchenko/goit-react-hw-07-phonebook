@@ -12,7 +12,7 @@ const ContactsItem = ({ item }) => {
   return (
     <>
       <span>
-        {item.name}: {item.number}
+        {item.name}: {item.phone}
       </span>
 
       <button className={styles.button} type="button" onClick={onClick}>
@@ -26,7 +26,7 @@ ContactsItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
   }).isRequired,
 };
 

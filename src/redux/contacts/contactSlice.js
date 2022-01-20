@@ -1,15 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchContacts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch('https://61e9c3d87bc0550017bc646c.mockapi.io/contacts');
+      if (!response.ok) {
+        throw new Error('Error fetching data from server!');
+      }
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
-    items: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    items: [],
     filterText: '',
+    status: null,
+    error: null,
   },
   reducers: {
     addContact(state, action) {
@@ -23,7 +37,7 @@ export const contactsSlice = createSlice({
         state.items.push({
           id: action.payload.id,
           name: action.payload.name,
-          number: action.payload.number,
+          phone: action.payload.phone,
         });
       }
     },
@@ -34,6 +48,20 @@ export const contactsSlice = createSlice({
     },
     changeFilter(state, action) {
       state.filterText = action.payload.filterText;
+    },
+  },
+  extraReducers: {
+    [fetchContacts.pending]: state => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [fetchContacts.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.items = action.payload;
+    },
+    [fetchContacts.rejected]: (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
     },
   },
 });

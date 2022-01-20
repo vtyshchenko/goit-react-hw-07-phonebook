@@ -1,14 +1,20 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './Phonebook.module.scss';
 import Contacts from './Contacts';
 import AddContact from './AddContact';
 import Filter from './Filter';
+import { fetchContacts } from '../../redux/contacts/contactSlice';
 
 function Phonebook() {
-  const contacts = useSelector(state => state.contacts.items);
+  const { items: contacts, status, error } = useSelector(state => state.contacts);
+  const dicpatch = useDispatch();
+  const isShowFilter = contacts && contacts.length > 1;
 
-  const isShowFilter = contacts.length > 1;
+  useEffect(() => {
+    dicpatch(fetchContacts());
+  }, []);
 
   return (
     <div className={styles.componenet}>
@@ -16,7 +22,10 @@ function Phonebook() {
       <AddContact />
       <h2 className={styles.title}>Contacts</h2>
       {isShowFilter && <Filter />}
-      <Contacts />
+
+      {status === 'loading' && <h2>Loading...</h2>}
+      {error && <h2>Server error: {error}</h2>}
+      {status === 'resolved' && <Contacts />}
     </div>
   );
 }
