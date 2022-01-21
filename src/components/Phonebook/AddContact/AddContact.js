@@ -1,9 +1,8 @@
-import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 
 import { useState } from 'react';
 
-import { addContact } from '../../../redux/contacts/contactSlice';
+import { addNewContact } from '../../../redux/contacts/contactSlice';
 
 import styles from './AddContact.module.scss';
 
@@ -29,8 +28,7 @@ function AddContact() {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const id = nanoid();
-    dispatch(addContact({ name: namePeople, phone, id }));
+    dispatch(addNewContact({ name: namePeople, phone }));
     reset();
   };
 

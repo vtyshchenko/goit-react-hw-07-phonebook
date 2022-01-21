@@ -2,12 +2,12 @@ import styles from './ContactsItem.module.scss';
 import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../../../redux/contacts/contactSlice';
+import { deleteContacts } from '../../../../redux/contacts/contactSlice';
 
 const ContactsItem = ({ item }) => {
   const dispatch = useDispatch();
 
-  const onClick = () => dispatch(deleteContact({ id: item.id }));
+  const onClick = () => dispatch(deleteContacts({ id: item.id }));
 
   return (
     <>
