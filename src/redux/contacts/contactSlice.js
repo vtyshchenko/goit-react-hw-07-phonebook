@@ -39,13 +39,13 @@ export const deleteContacts = createAsyncThunk(
 export const addNewContact = createAsyncThunk(
   'contacts/addNewContact',
   async ({ name, phone }, { rejectWithValue, dispatch }) => {
-    const cont = await fetch(
+    let contactData = await fetch(
       `https://61e9c3d87bc0550017bc646c.mockapi.io/contacts?search=${name} `,
     );
-    const datas = await cont.json();
+    contactData = await contactData.json();
 
-    if (datas.length > 0) {
-      alert(`${name} is alredy in contacts`);
+    if (contactData.length > 0) {
+      alert(`Contact with name '${name}' is alredy in contacts`);
     } else {
       try {
         const contact = {
@@ -89,19 +89,11 @@ export const contactsSlice = createSlice({
   },
   reducers: {
     addContact(state, action) {
-      if (
-        state.items.find(
-          contact => action.payload.name.toLowerCase() === contact.name.toLowerCase(),
-        )
-      ) {
-        alert(`${action.payload.name} is alredy in contacts`);
-      } else {
-        state.items.push({
-          id: action.payload.id,
-          name: action.payload.name,
-          phone: action.payload.phone,
-        });
-      }
+      state.items.push({
+        id: action.payload.id,
+        name: action.payload.name,
+        phone: action.payload.phone,
+      });
     },
     deleteContact(state, action) {
       state.items = state.items.filter(contactItem => {

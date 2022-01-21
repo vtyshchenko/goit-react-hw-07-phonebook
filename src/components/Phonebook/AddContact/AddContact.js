@@ -1,9 +1,7 @@
 import { useDispatch } from 'react-redux';
-
 import { useState } from 'react';
 
 import { addNewContact } from '../../../redux/contacts/contactSlice';
-
 import styles from './AddContact.module.scss';
 
 function AddContact() {
@@ -63,6 +61,7 @@ function AddContact() {
           onChange={handleChange}
         />
       </label>
+      
       <button className={styles.button} type="submit">
         Add contact
       </button>
