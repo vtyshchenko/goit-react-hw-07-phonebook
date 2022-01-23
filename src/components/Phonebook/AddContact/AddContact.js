@@ -11,10 +11,15 @@ function AddContact() {
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    if (name === 'phone') {
-      setPhone(value);
-    } else {
-      setNamePeople(value);
+    switch (name) {
+      case 'phone':
+        setPhone(value);
+        break;
+      case 'name':
+        setNamePeople(value);
+        break;
+      default:
+        break;
     }
   };
 
@@ -61,7 +66,7 @@ function AddContact() {
           onChange={handleChange}
         />
       </label>
-      
+
       <button className={styles.button} type="submit">
         Add contact
       </button>

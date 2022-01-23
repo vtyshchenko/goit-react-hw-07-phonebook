@@ -7,7 +7,10 @@ import { deleteContacts } from '../../../../redux/contacts/contactSlice';
 const ContactsItem = ({ item }) => {
   const dispatch = useDispatch();
 
-  const onClick = () => dispatch(deleteContacts({ id: item.id }));
+  const onClick = event => {
+    event.target.disabled = true;
+    dispatch(deleteContacts({ id: item.id }));
+  };
 
   return (
     <>
@@ -15,7 +18,7 @@ const ContactsItem = ({ item }) => {
         {item.name}: {item.phone}
       </span>
 
-      <button className={styles.button} type="button" onClick={onClick}>
+      <button className={styles.button} id={`id${item.id}`} type="button" onClick={onClick}>
         Delete
       </button>
     </>
