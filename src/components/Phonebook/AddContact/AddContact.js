@@ -15,7 +15,7 @@ function AddContact() {
       case 'phone':
         setPhone(value);
         break;
-      case 'name':
+      case 'namePeople':
         setNamePeople(value);
         break;
       default:
