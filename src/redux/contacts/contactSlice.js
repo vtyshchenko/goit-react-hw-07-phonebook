@@ -46,7 +46,7 @@ export const addNewContact = createAsyncThunk(
 
     if (contactData.length > 0) {
       const filteredContacts = contactData.filter(contactItem => {
-        return contactItem.name === name;
+        return contactItem.name.toLowerCase() === name.toLowerCase();
       });
       if (filteredContacts.length > 0) {
         alert(`Contact with name '${name}' is alredy in contacts`);
